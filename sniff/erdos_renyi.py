@@ -15,6 +15,10 @@ def erdos_renyi_adj(n, p) -> np.ndarray:
     return A
 
 
+def apply_RMT_noise(A) -> np.ndarray:
+    pass
+
+
 def make_laplacian(A) -> np.ndarray:
     """
     Makes a graph Laplacian matrix L from an adjacency matrix A
@@ -24,6 +28,8 @@ def make_laplacian(A) -> np.ndarray:
     return L
 
 
+# why does it converge faster with more agents?
+# look at the eigenvalues
 n = 10
 p = 0.3
 A = erdos_renyi_adj(n, p)
@@ -31,6 +37,7 @@ print(A)
 L = make_laplacian(A)
 print(L)
 
+# define starting states for our agents
 x0 = np.random.random(n)
 dt = 0.01
 T = 5.0
