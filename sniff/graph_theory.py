@@ -3,6 +3,9 @@ import numpy as np
 
 class Graph:
     def __init__(self, n):
+        """
+        Initialize the graph with the number of agents
+        """
         self.n = n
 
     def erdos_renyi_adj(self, p) -> np.ndarray:
@@ -16,3 +19,12 @@ class Graph:
         A = A + A.T
 
         return A
+
+    @staticmethod
+    def make_laplacian(A) -> np.ndarray:
+        """
+        Makes a graph Laplacian matrix L from an adjacency matrix A
+        """
+        D = np.diag(A.sum(axis=1))
+        L = D - A
+        return L
