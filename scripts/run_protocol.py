@@ -17,8 +17,8 @@ def protocol(agents: int, link: float):
     simulation = Simulate(A, 8, 0.01, x0)
     logs = simulation.solve_consensus_dynamics_w_GOE_noise()
 
-    # plotter = Plot(logs)
-    # plotter.plot_convergence()
+    plotter = Plot(logs)
+    plotter.plot_convergence()
 
 
 if __name__ == "__main__":

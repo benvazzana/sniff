@@ -9,4 +9,5 @@ class Plot:
         self.sol = solution
 
     def plot_convergence(self):
-        plt.plot(self.sol.t, self.sol.y)
+        plt.plot(self.sol.t, self.sol.y.T)
+        plt.show()
