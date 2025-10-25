@@ -12,7 +12,7 @@ You **don’t** need to manually activate virtual environments.
 
 ### 1. Clone the repository
 ```bash
-git clone https://github.com/yourusername/sniff.git
+git clone git@github.com:iqsnider/sniff.git
 cd sniff
 ````
 
