@@ -1,5 +1,6 @@
 from sniff.graph_theory import Graph
 from sniff.simulation import Simulate
+from sniff.statistics import Plot
 
 import typer
 import numpy as np
@@ -14,7 +15,10 @@ def protocol(agents: int, link: float):
 
     x0 = np.random.random(agents)
     simulation = Simulate(A, 8, 0.01, x0)
-    simulation.solve_consensus_dynamics_w_GOE_noise()
+    logs = simulation.solve_consensus_dynamics_w_GOE_noise()
+
+    # plotter = Plot(logs)
+    # plotter.plot_convergence()
 
 
 if __name__ == "__main__":
