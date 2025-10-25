@@ -1,7 +1,8 @@
 from sniff.graph_theory import Graph
-from sniff.noise import RMT
+from sniff.simulation import Simulate
 
 import typer
+import numpy as np
 
 app = typer.Typer()
 
@@ -10,9 +11,10 @@ app = typer.Typer()
 def protocol(agents: int, link: float):
     graph = Graph(agents)
     A = graph.erdos_renyi_adj(link)
-    rmo = RMT(A)
-    L_noisy = rmo.noise_GOE()
-    print(L_noisy)
+
+    x0 = np.random.random(agents)
+    simulation = Simulate(A, 8, 0.01, x0)
+    simulation.solve_consensus_dynamics_w_GOE_noise()
 
 
 if __name__ == "__main__":

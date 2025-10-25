@@ -12,7 +12,7 @@ class RMT:
         self.A = A
         self.L = Graph.make_laplacian(A)
 
-    def noise_GOE(self, noise_strength=0.1):
+    def noise_GOE(self, noise_strength=0.1) -> np.ndarray:
         """
         Generates noise for an adjacency matrix in the form of a
         Gaussian Orthogonal Ensemble (GOE)
