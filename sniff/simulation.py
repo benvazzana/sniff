@@ -22,9 +22,6 @@ class Simulate:
         solution = solve_ivp(self._consensus_dynamics_w_GOE_noise,
                              t_span, self.x0, t_eval=t_eval, method='RK45')
 
-        # plt.plot(solution.t, solution.y.T)
-        # plt.show()
-
         return solution
 
     def _consensus_dynamics_w_GOE_noise(self, t, x):
