@@ -35,7 +35,8 @@ class Graph:
         Takes a graph Laplacian L and 2D setpoint p.
 
         Computes a transform matrix B and offset vector c from the stack of
-        all positions resulting from consensus with neighbors and setpoint attraction
+        all positions resulting from consensus with neighbors and setpoint
+        attraction
 
         pdot = Bp + c , p = [(x1,y1), ...., (xn, yn)]
         """
@@ -55,7 +56,8 @@ class Graph:
         Takes a graph Laplacian L and 2D setpoint p.
 
         Computes a transform matrix B and offset vector c from the stack of
-        all positions resulting from consensus with neighbors and setpoint attraction
+        all positions resulting from consensus with neighbors, setpoint attraction,
+        and formation positioning
 
         pdot = Bp + c , p = [(x1,y1), ...., (xn, yn)]
         """
