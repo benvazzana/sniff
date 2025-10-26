@@ -35,5 +35,19 @@ def protocol_2D(agents: int, link: float):
     plotter.plot_2D_paths(p0)
 
 
+@app.command()
+def formation(agents: int, link: float):
+    graph = Graph(agents)
+    A = graph.erdos_renyi_adj(link)
+
+    x0 = np.random.random((agents, 2))
+    p0 = x0.flatten()
+    simulation = Simulate(A, 8, 0.01, p0)
+    logs = simulation.solve_consensus_formation_setpoint_tracking_w_GOE_noise()
+
+    plotter = Plot(logs)
+    plotter.plot_2D_paths(p0)
+
+
 if __name__ == "__main__":
     app()

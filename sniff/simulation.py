@@ -46,8 +46,32 @@ class Simulate:
         return solution
 
     def _consensus_2D_setpoint_w_GOE_noise(self, t, x):
-        pass
-        L_noisy = self.rmo.noise_GOE()
+        L_noisy = self.rmo.noise_GOE(noise_strength=0.5)
         B, c = Graph.make_setpoint_transform_2D(
             L_noisy, alpha=1, beta=1, p_track=[0, 0])
+        return B @ x + c
+
+    def solve_consensus_formation_setpoint_tracking_w_GOE_noise(self):
+        """
+        Solves the consensus dynamics for converging to a 2D
+        setpoint and arranges agents into a formation
+        """
+        t_span = (0, self.T)
+        t_eval = np.linspace(*t_span, int(self.T/self.dT))
+
+        solution = solve_ivp(self._consensus_formation_2D_setpoint_w_GOE_noise,
+                             t_span, self.x0, t_eval=t_eval, method='RK45')
+
+        return solution
+
+    def _consensus_formation_2D_setpoint_w_GOE_noise(self, t, x):
+        # triangle formation for test
+        formation = np.array([
+            [0, 0],
+            [0.05, 0],
+            [0.025, 0.05]
+        ])
+        L_noisy = self.rmo.noise_GOE(noise_strength=0.5)
+        B, c = Graph.make_setpoint_formation_transform_2D(
+            L_noisy, alpha=1, beta=1, p_track=[0, 0], formation_offsets=formation)
         return B @ x + c
