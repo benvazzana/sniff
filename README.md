@@ -26,10 +26,19 @@ uv sync
 
 ## Usage
 
-Run simulations directly with `uv run`.
+Run simulations directly with `uv run`. All CLI commands have default values.
 
 ### Basic example
 
 ```bash
-uv run scripts/run_protocol.py protocol 10 0.5
+uv run protocol-1d
 ```
+
+### Running simple 2D setpoint tracking
+```bash
+uv run protocol-2d --p-track 0.0 0.0
+```
+
+### Running grid formation consensus
+```bash
+uv run formation --n 20 --spacing 0.1
