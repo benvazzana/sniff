@@ -6,11 +6,14 @@ from scipy.integrate import solve_ivp
 
 
 class Simulate:
-    def __init__(self, A, time, time_step, x0):
+    def __init__(self, A, time, time_step, x0, noise_update_rate=0.1):
         self.T = time
         self.dT = time_step
         self.x0 = x0
         self.rmo = RMT(A)
+        self.noise_update_rate = noise_update_rate
+        self.current_L_noisy = None
+        self.last_noise_update = -np.inf
 
     def solve_consensus_dynamics_w_GOE_noise(self, noise_strength=0.1):
         """
@@ -29,8 +32,10 @@ class Simulate:
         """
         Consensus dynamics state-space model
         """
-        L_noisy = self.rmo.noise_GOE(noise_strength)
-        return -L_noisy @ x
+        if t - self.last_noise_update >= self.noise_update_rate:
+            self.current_L_noisy = self.rmo.noise_GOE(noise_strength)
+            self.last_noise_update = t
+        return -self.current_L_noisy @ x
 
     def solve_consensus_setpoint_tracking_w_GOE_noise(self, alpha=1, beta=1, p_track=[0, 0], noise_strength=0.1):
         """

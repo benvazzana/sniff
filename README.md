@@ -7,7 +7,7 @@ Consensus protocol for a random graph of agents perturbed with communication noi
 
 ## Installation (with uv)
 
-`sniff` uses [uv](https://github.com/astral-sh/uv) — a modern, fast Python package manager and environment builder.  
+`sniff` uses [uv](https://github.com/astral-sh/uv), a fast Python package manager and environment builder.  
 You **don’t** need to manually activate virtual environments.
 
 ### 1. Clone the repository
