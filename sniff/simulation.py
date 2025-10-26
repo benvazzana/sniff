@@ -66,12 +66,30 @@ class Simulate:
 
     def _consensus_formation_2D_setpoint_w_GOE_noise(self, t, x):
         # triangle formation for test
-        formation = np.array([
-            [0, 0],
-            [0.05, 0],
-            [0.025, 0.05]
-        ])
+        # formation = np.array([
+        #     [0, 0],
+        #     [0.05, 0],
+        #     [0.025, 0.05]
+        # ])
         L_noisy = self.rmo.noise_GOE(noise_strength=0.5)
+        formation = Simulate.generate_formation(L_noisy.shape[0], 0.05)
         B, c = Graph.make_setpoint_formation_transform_2D(
             L_noisy, alpha=1, beta=1, p_track=[0, 0], formation_offsets=formation)
         return B @ x + c
+
+    @staticmethod
+    def generate_formation(n, spacing) -> np.array:
+        """
+        Generates a grid formation for a given number of agents
+        and scales the formation according to the spacing
+        """
+        side = int(np.ceil(np.sqrt(n)))
+        formation = []
+
+        for i in range(side):
+            for j in range(side):
+                if len(formation) >= n:
+                    break
+                formation.append([i*spacing, j*spacing])
+
+        return np.array(formation)
