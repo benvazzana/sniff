@@ -16,3 +16,15 @@ pub fn erdos_renyi_adj(n: usize, p: f64) -> Mat<f64> {
     mat
 }
 
+pub fn make_laplacian(mat: Mat<f64>) -> Mat<f64> {
+    assert_eq!(mat.nrows(), mat.ncols(), "matrix must be square");
+
+    Mat::from_fn(mat.nrows(), mat.ncols(), |i, j| (
+        if i == j {
+            mat.row(i).sum()
+        } else {
+            -mat[(i, j)]
+        }
+    ))
+}
+
