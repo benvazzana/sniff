@@ -1,7 +1,6 @@
 from sniff.noise import RMT
 from sniff.graph_theory import Graph
 
-import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
@@ -13,7 +12,7 @@ class Simulate:
         self.x0 = x0
         self.rmo = RMT(A)
 
-    def solve_consensus_dynamics_w_GOE_noise(self):
+    def solve_consensus_dynamics_w_GOE_noise(self, noise_strength=0.1):
         """
         Solves the consensus dynamics
         """
@@ -21,18 +20,19 @@ class Simulate:
         t_eval = np.linspace(*t_span, int(self.T/self.dT))
 
         solution = solve_ivp(self._consensus_dynamics_w_GOE_noise,
-                             t_span, self.x0, t_eval=t_eval, method='RK45')
+                             t_span, self.x0, t_eval=t_eval,
+                             method='RK45', args=(noise_strength,))
 
         return solution
 
-    def _consensus_dynamics_w_GOE_noise(self, t, x):
+    def _consensus_dynamics_w_GOE_noise(self, t, x, noise_strength):
         """
         Consensus dynamics state-space model
         """
-        L_noisy = self.rmo.noise_GOE()
+        L_noisy = self.rmo.noise_GOE(noise_strength)
         return -L_noisy @ x
 
-    def solve_consensus_setpoint_tracking_w_GOE_noise(self):
+    def solve_consensus_setpoint_tracking_w_GOE_noise(self, alpha=1, beta=1, p_track=[0, 0], noise_strength=0.1):
         """
         Solves the consensus dynamics for converging to a 2D
         setpoint
@@ -41,17 +41,21 @@ class Simulate:
         t_eval = np.linspace(*t_span, int(self.T/self.dT))
 
         solution = solve_ivp(self._consensus_2D_setpoint_w_GOE_noise,
-                             t_span, self.x0, t_eval=t_eval, method='RK45')
+                             t_span,
+                             self.x0,
+                             t_eval=t_eval,
+                             args=(alpha, beta, p_track, noise_strength),
+                             method='RK45')
 
         return solution
 
-    def _consensus_2D_setpoint_w_GOE_noise(self, t, x):
-        L_noisy = self.rmo.noise_GOE(noise_strength=0.5)
+    def _consensus_2D_setpoint_w_GOE_noise(self, t, x, alpha, beta, p_track, noise_strength):
+        L_noisy = self.rmo.noise_GOE(noise_strength)
         B, c = Graph.make_setpoint_transform_2D(
-            L_noisy, alpha=1, beta=1, p_track=[0, 0])
+            L_noisy, alpha=alpha, beta=beta, p_track=p_track)
         return B @ x + c
 
-    def solve_consensus_formation_setpoint_tracking_w_GOE_noise(self):
+    def solve_consensus_formation_setpoint_tracking_w_GOE_noise(self, alpha=1, beta=1, p_track=[0, 0], noise_strength=0.1, spacing=0.05):
         """
         Solves the consensus dynamics for converging to a 2D
         setpoint and arranges agents into a formation
@@ -60,21 +64,19 @@ class Simulate:
         t_eval = np.linspace(*t_span, int(self.T/self.dT))
 
         solution = solve_ivp(self._consensus_formation_2D_setpoint_w_GOE_noise,
-                             t_span, self.x0, t_eval=t_eval, method='RK45')
+                             t_span,
+                             self.x0,
+                             t_eval=t_eval,
+                             method='RK45',
+                             args=(alpha, beta, p_track, noise_strength, spacing))
 
         return solution
 
-    def _consensus_formation_2D_setpoint_w_GOE_noise(self, t, x):
-        # triangle formation for test
-        # formation = np.array([
-        #     [0, 0],
-        #     [0.05, 0],
-        #     [0.025, 0.05]
-        # ])
-        L_noisy = self.rmo.noise_GOE(noise_strength=0.5)
-        formation = Simulate.generate_formation(L_noisy.shape[0], 0.05)
+    def _consensus_formation_2D_setpoint_w_GOE_noise(self, t, x, alpha, beta, p_track, noise_strength, spacing):
+        L_noisy = self.rmo.noise_GOE(noise_strength)
+        formation = Simulate.generate_formation(L_noisy.shape[0], spacing)
         B, c = Graph.make_setpoint_formation_transform_2D(
-            L_noisy, alpha=1, beta=1, p_track=[0, 0], formation_offsets=formation)
+            L_noisy, alpha=alpha, beta=beta, p_track=p_track, formation_offsets=formation)
         return B @ x + c
 
     @staticmethod
