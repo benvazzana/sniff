@@ -28,3 +28,23 @@ class Graph:
         D = np.diag(A.sum(axis=1))
         L = D - A
         return L
+
+    @staticmethod
+    def make_setpoint_transform_2D(L, alpha, beta, p_track) -> np.ndarray:
+        """
+        Takes a graph Laplacian L and 2D setpoint p.
+
+        Computes a transform matrix B and offset vector c from the stack of
+        all positions resulting from consensus with neighbors and setpoint attraction
+
+        pdot = Bp + c , p = [(x1,y1), ...., (xn, yn)]
+        """
+        N = L.shape[0]
+        I2 = np.eye(2)
+        IN = np.eye(N)
+        ones_N = np.ones(N)
+
+        B = -alpha*np.kron(L, I2) - beta*np.kron(IN, I2)
+        c = beta*np.kron(p_track, ones_N)
+
+        return B, c

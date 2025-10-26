@@ -1,6 +1,7 @@
 from sniff.noise import RMT
-import matplotlib.pyplot as plt
+from sniff.graph_theory import Graph
 
+import matplotlib.pyplot as plt
 import numpy as np
 from scipy.integrate import solve_ivp
 
@@ -30,3 +31,23 @@ class Simulate:
         """
         L_noisy = self.rmo.noise_GOE()
         return -L_noisy @ x
+
+    def solve_consensus_setpoint_tracking_w_GOE_noise(self):
+        """
+        Solves the consensus dynamics for converging to a 2D
+        setpoint
+        """
+        t_span = (0, self.T)
+        t_eval = np.linspace(*t_span, int(self.T/self.dT))
+
+        solution = solve_ivp(self._consensus_2D_setpoint_w_GOE_noise,
+                             t_span, self.x0, t_eval=t_eval, method='RK45')
+
+        return solution
+
+    def _consensus_2D_setpoint_w_GOE_noise(self, t, x):
+        pass
+        L_noisy = self.rmo.noise_GOE()
+        B, c = Graph.make_setpoint_transform_2D(
+            L_noisy, alpha=1, beta=1, p_track=[0, 0])
+        return B @ x + c
