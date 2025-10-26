@@ -15,12 +15,15 @@ def protocol_1D(
     time: float = 10.0,
     time_step: float = 0.01,
     noise_strength: float = 0.1,
+    noise_model: str = 'piecewise',
+    noise_update_rate: float = 0.1
 ):
     graph = Graph(n)
     A = graph.erdos_renyi_adj(link)
 
     x0 = np.random.random(n)
-    simulation = Simulate(A, time, time_step, x0)
+    simulation = Simulate(A, time, time_step, x0,
+                          noise_model, noise_update_rate)
     logs = simulation.solve_consensus_dynamics_w_GOE_noise(noise_strength)
 
     plotter = Plot(logs)
@@ -36,6 +39,8 @@ def protocol_2D(
     alpha: float = 1.0,
     beta: float = 1.0,
     noise_strength: float = 0.1,
+    noise_model: str = 'piecewise',
+    noise_update_rate: float = 0.1,
     p_track: tuple[float, float] = (0.0, 0.0)
 ):
     graph = Graph(n)
@@ -43,7 +48,8 @@ def protocol_2D(
 
     x0 = np.random.random((n, 2))
     p0 = x0.flatten()
-    simulation = Simulate(A, time, time_step, p0)
+    simulation = Simulate(A, time, time_step, p0,
+                          noise_model, noise_update_rate)
     logs = simulation.solve_consensus_setpoint_tracking_w_GOE_noise(
         alpha=alpha, beta=beta, p_track=p_track, noise_strength=noise_strength
     )
@@ -61,6 +67,8 @@ def formation(
     alpha: float = 1.0,
     beta: float = 1.0,
     noise_strength: float = 0.1,
+    noise_model: str = 'piecewise',
+    noise_update_rate: float = 0.1,
     spacing: float = 0.05,
     p_track: tuple[float, float] = (0.0, 0.0)
 ):
@@ -70,7 +78,8 @@ def formation(
     x0 = np.random.random((n, 2))
     p0 = x0.flatten()
 
-    simulation = Simulate(A, time, time_step, p0)
+    simulation = Simulate(A, time, time_step, p0,
+                          noise_model, noise_update_rate)
     logs = simulation.solve_consensus_formation_setpoint_tracking_w_GOE_noise(
         alpha=alpha, beta=beta, p_track=p_track, noise_strength=noise_strength, spacing=spacing)
 
