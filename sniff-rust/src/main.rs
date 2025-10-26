@@ -7,6 +7,6 @@ fn main() {
 
     let adj = erdos_renyi_adj(n, p);
     print!("{:?}", adj);
-    let l = make_laplacian(adj);
+    let l = make_laplacian(&adj);
     print!("{:?}", l);
 }
