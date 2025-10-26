@@ -13,6 +13,4 @@ dependencies = [
 [tool.uv]
 package = true
 [project.scripts]
-protocol-1d = "sniff.scripts.run_protocol:protocol_1D"
-protocol-2d = "sniff.scripts.run_protocol:protocol_2D"
-formation = "sniff.scripts.run_protocol:formation"
+sniff = "sniff.scripts.run_protocol:app"
