@@ -32,7 +32,7 @@ def protocol_2D(agents: int, link: float):
     logs = simulation.solve_consensus_setpoint_tracking_w_GOE_noise()
 
     plotter = Plot(logs)
-    plotter.plot_2D_paths()
+    plotter.plot_2D_paths(p0)
 
 
 if __name__ == "__main__":

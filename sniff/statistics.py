@@ -12,8 +12,8 @@ class Plot:
         plt.plot(self.sol.t, self.sol.y.T)
         plt.show()
 
-    def plot_2D_paths(self):
-        trajectories = self.sol.y.T.reshape(-1, len(self.sol) // 2, 2)
+    def plot_2D_paths(self, x0):
+        trajectories = self.sol.y.T.reshape(-1, len(x0) // 2, 2)
         x_coords = trajectories[:, :, 0]
         y_coords = trajectories[:, :, 1]
 
