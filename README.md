@@ -1,7 +1,7 @@
 # sniff
 [![Build](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml/badge.svg)](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml)
 
-Consensus protocol for a random graph of agents perturbed with communication noise.
+Consensus protocol for a random graph of agents perturbed with Gaussian Orthogonal Ensemble (GOE) noise.
 
 ---
 
