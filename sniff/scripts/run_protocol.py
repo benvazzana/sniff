@@ -16,7 +16,8 @@ def protocol_1D(
     time_step: float = 0.01,
     noise_strength: float = 0.1,
     noise_model: str = 'piecewise',
-    noise_update_rate: float = 0.1
+    noise_update_rate: float = 0.1,
+    save: str = None
 ):
     graph = Graph(n)
     A = graph.erdos_renyi_adj(link)
@@ -27,7 +28,7 @@ def protocol_1D(
     logs = simulation.solve_consensus_dynamics_w_GOE_noise(noise_strength)
 
     plotter = Plot(logs)
-    plotter.plot_1D_convergence()
+    plotter.plot_1D_convergence(save)
 
 
 @app.command()
@@ -41,7 +42,8 @@ def protocol_2D(
     noise_strength: float = 0.1,
     noise_model: str = 'piecewise',
     noise_update_rate: float = 0.1,
-    p_track: tuple[float, float] = (0.0, 0.0)
+    p_track: tuple[float, float] = (0.0, 0.0),
+    save: str = None
 ):
     graph = Graph(n)
     A = graph.erdos_renyi_adj(link)
@@ -55,7 +57,7 @@ def protocol_2D(
     )
 
     plotter = Plot(logs)
-    plotter.plot_2D_paths(p0)
+    plotter.plot_2D_paths(p0, save)
 
 
 @app.command()
@@ -70,7 +72,8 @@ def formation(
     noise_model: str = 'piecewise',
     noise_update_rate: float = 0.1,
     spacing: float = 0.05,
-    p_track: tuple[float, float] = (0.0, 0.0)
+    p_track: tuple[float, float] = (0.0, 0.0),
+    save: str = None
 ):
     graph = Graph(n)
     A = graph.erdos_renyi_adj(link)
@@ -84,7 +87,7 @@ def formation(
         alpha=alpha, beta=beta, p_track=p_track, noise_strength=noise_strength, spacing=spacing)
 
     plotter = Plot(logs)
-    plotter.plot_2D_paths(p0)
+    plotter.plot_2D_paths(p0, save)
 
 
 if __name__ == "__main__":

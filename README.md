@@ -35,12 +35,30 @@ Run simulations directly with `uv run`. All CLI commands have default values.
 ```bash
 uv run sniff protocol-1d
 ```
+<p align="center">
+  <img src="docs/assets/figures/protocol-1d.png" width="500"/>
+  <br>
+  <em>Figure 1: Consensus Protocol for noisy 1D agents.</em>
+</p>
 
 ### Running simple 2D setpoint tracking
 ```bash
-uv run sniff protocol-2d --p-track 0.0 0.0
+uv run sniff protocol-2d --n 20 --p-track 0.0 0.0
 ```
+
+<p align="center">
+  <img src="docs/assets/figures/protocol-2d.png" width="400"/>
+  <br>
+  <em>Figure 2: Consensus Protocol for noisy 2D agents tracking a setpoint.</em>
+</p>
 
 ### Running grid formation consensus
 ```bash
-uv run sniff formation --n 20 --spacing 0.1
+uv run sniff formation --n 20 --p-track 0.0 0.0
+```
+
+<p align="center">
+  <img src="docs/assets/figures/formation.png" width="400"/>
+  <br>
+  <em>Figure 3: Consensus Protocol for noisy 2D agents forming a grid.</em>
+</p>
