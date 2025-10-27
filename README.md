@@ -1,5 +1,6 @@
 # sniff
 [![Build](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml/badge.svg)](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/gh/iqsnider/sniff/graph/badge.svg?token=0UFPF4SNKI)](https://codecov.io/gh/iqsnider/sniff)
 
 Consensus protocol for a random graph of agents perturbed with Gaussian Orthogonal Ensemble (GOE) noise.
 
