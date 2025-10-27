@@ -1,5 +1,6 @@
 # sniff
-[![codecov](https://codecov.io/gh/iansnider/sniff/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iansnider/sniff)
+[![Build](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml/badge.svg)](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml)
+
 Consensus protocol for a random graph of agents perturbed with communication noise.
 
 ---
