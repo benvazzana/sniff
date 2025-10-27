@@ -46,6 +46,19 @@ uv run sniff protocol-1d
 uv run sniff protocol-2d --p-track 0.0 0.0
 ```
 
+<p align="center">
+  <img src="docs/assets/figures/protocol-2d.png" width="400"/>
+  <br>
+  <em>Figure 2: Consensus Protocol for noisy 2D agents tracking a setpoint.</em>
+</p>
+
 ### Running grid formation consensus
 ```bash
 uv run sniff formation --n 20 --spacing 0.1
+```
+
+<p align="center">
+  <img src="docs/assets/figures/formation.png" width="400"/>
+  <br>
+  <em>Figure 3: Consensus Protocol for noisy 2D agents forming a grid.</em>
+</p>
