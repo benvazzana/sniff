@@ -7,7 +7,8 @@ from scipy.integrate import solve_ivp
 
 class Simulate:
     def __init__(self, A, time, time_step, x0,
-                 noise_model='piecewise', noise_update_rate=0.1):
+                 noise_model='piecewise', noise_update_rate=0.1,
+                 seed=None):
         """
         The noise model options:
         'static' :  single GOE sample for fixed uncertain channels
@@ -17,11 +18,14 @@ class Simulate:
         self.T = time
         self.dT = time_step
         self.x0 = x0
-        self.rmo = RMT(A)
         self.noise_model = noise_model
         self.noise_update_rate = noise_update_rate
         self.current_L_noisy = None
         self.last_noise_update = -np.inf
+
+        self.seed = seed
+        self.rng = np.random.default_rng(seed)
+        self.rmo = RMT(A, seed=seed)
 
     def _get_noisy_laplacian(self, t, noise_strength):
         """
@@ -125,18 +129,12 @@ class Simulate:
         return B @ x + c
 
     @staticmethod
-    def generate_formation(n, spacing) -> np.array:
+    def generate_formation(n, spacing) -> np.ndarray:
         """
-        Generates a grid formation for a given number of agents
-        and scales the formation according to the spacing
+        Generates a deterministic square grid formation
+        with consistent ordering and spacing.
         """
         side = int(np.ceil(np.sqrt(n)))
-        formation = []
-
-        for i in range(side):
-            for j in range(side):
-                if len(formation) >= n:
-                    break
-                formation.append([i*spacing, j*spacing])
-
-        return np.array(formation)
+        coords = np.array(
+            [[i*spacing, j*spacing] for i in range(side) for j in range(side)])
+        return coords[:n]
