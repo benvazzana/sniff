@@ -1,4 +1,5 @@
 # sniff
+[![codecov](https://codecov.io/gh/iansnider/sniff/branch/trunk/graph/badge.svg)](https://codecov.io/gh/iansnider/sniff)
 Consensus protocol for a random graph of agents perturbed with communication noise.
 
 ---
