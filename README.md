@@ -35,12 +35,11 @@ Run simulations directly with `uv run`. All CLI commands have default values.
 ```bash
 uv run sniff protocol-1d
 ```
-```{figure} docs/assets/figures/protocol-1d
----
-height: 200px
-name: protocol-1d
----
-Consensus protocol for 1D agents.
+<p align="center">
+  <img src="docs/assets/figures/protocol-1d.png" width="400"/>
+  <br>
+  <em>Figure 1: Consensus Protocol for noisy 1D agents.</em>
+</p>
 
 ### Running simple 2D setpoint tracking
 ```bash
