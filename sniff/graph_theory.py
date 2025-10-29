@@ -2,18 +2,19 @@ import numpy as np
 
 
 class Graph:
-    def __init__(self, n):
+    def __init__(self, n, seed=None):
         """
         Initialize the graph with the number of agents
         """
         self.n = n
+        self.rng = np.random.default_rng(seed)
 
     def erdos_renyi_adj(self, p) -> np.ndarray:
         """
         Generates an adjacency matrix from an Erdos-Renyi
         graph G of size n with edge probability p
         """
-        random_matrix = np.random.random((self.n, self.n))
+        random_matrix = self.rng.random((self.n, self.n))
         A = (random_matrix < p).astype(int)
         A = np.triu(A, 1)
         A = A + A.T

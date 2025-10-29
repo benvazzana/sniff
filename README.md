@@ -1,5 +1,8 @@
 # sniff
-Consensus protocol for a random graph of agents perturbed with communication noise.
+[![Build](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml/badge.svg)](https://github.com/iqsnider/sniff/actions/workflows/pytest.yml)
+[![codecov](https://codecov.io/gh/iqsnider/sniff/graph/badge.svg?token=0UFPF4SNKI)](https://codecov.io/gh/iqsnider/sniff)
+
+Consensus protocol for a random graph of agents perturbed with Gaussian Orthogonal Ensemble (GOE) noise.
 
 ---
 
@@ -7,7 +10,7 @@ Consensus protocol for a random graph of agents perturbed with communication noi
 
 ## Installation (with uv)
 
-`sniff` uses [uv](https://github.com/astral-sh/uv) — a modern, fast Python package manager and environment builder.  
+`sniff` uses [uv](https://github.com/astral-sh/uv), a fast Python package manager and environment builder.  
 You **don’t** need to manually activate virtual environments.
 
 ### 1. Clone the repository
@@ -31,14 +34,32 @@ Run simulations directly with `uv run`. All CLI commands have default values.
 ### Basic example
 
 ```bash
-uv run protocol-1d
+uv run sniff protocol-1d
 ```
+<p align="center">
+  <img src="docs/assets/figures/protocol-1d.png" width="500"/>
+  <br>
+  <em>Figure 1: Consensus Protocol for noisy 1D agents.</em>
+</p>
 
 ### Running simple 2D setpoint tracking
 ```bash
-uv run protocol-2d --p-track 0.0 0.0
+uv run sniff protocol-2d --n 20 --p-track 0.0 0.0
 ```
+
+<p align="center">
+  <img src="docs/assets/figures/protocol-2d.png" width="400"/>
+  <br>
+  <em>Figure 2: Consensus Protocol for noisy 2D agents tracking a setpoint.</em>
+</p>
 
 ### Running grid formation consensus
 ```bash
-uv run formation --n 20 --spacing 0.1
+uv run sniff formation --n 20 --p-track 0.0 0.0
+```
+
+<p align="center">
+  <img src="docs/assets/figures/formation.png" width="400"/>
+  <br>
+  <em>Figure 3: Consensus Protocol for noisy 2D agents forming a grid.</em>
+</p>

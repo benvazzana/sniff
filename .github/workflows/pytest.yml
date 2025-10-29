@@ -1,0 +1,46 @@
+
+name: CI - Pytest
+
+on:
+  push:
+    branches: [ trunk, main ]
+  pull_request:
+    branches: [ trunk, main ]
+
+jobs:
+  test:
+    name: Run tests on ${{ matrix.os }} / Python ${{ matrix.python-version }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+        python-version: ["3.13", "3.12", "3.11"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Install UV
+        run: |
+          pip install uv
+
+      - name: Sync environment
+        run: |
+          uv sync --all-extras --dev
+
+      - name: Run pytest with coverage
+        run: |
+          uv run pytest --maxfail=1 --disable-warnings -q --cov=sniff --cov-report=xml
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          file: ./coverage.xml
+          fail_ci_if_error: false
+          verbose: true
